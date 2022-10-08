@@ -84,6 +84,7 @@ class Select extends InteractiveLines<SelectOption> {
     if (pressedKey.isControl) {
       if (pressedKey.controlChar == ControlCharacter.ctrlC) {
         context.clearRender();
+        context.showCursor();
         exit(0);
       } else if (pressedKey.controlChar == ControlCharacter.arrowUp) {
         _up();
