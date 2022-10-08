@@ -49,5 +49,5 @@ Future<void> main(List<String> arguments) async {
   ).load();
 
   git.runCommand(['add', '.']);
-  git.runCommand(['commit', '-m "$commitType($scope): $message"']);
+  git.runCommand(['commit', '-m', '$commitType($scope): $message']);
 }
