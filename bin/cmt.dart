@@ -24,14 +24,14 @@ Future<void> main(List<String> arguments) async {
   final git = await GitDir.fromExisting(path.current);
   final commits = await git.commits();
   final commitMessageRegex = RegExp(
-    r'/(refactor|feat|fix|docs|style|test|chore)((?:\([^())\r\n]*\)|\()?):(.*)?/gm',
+    r'(refactor|feat|fix|docs|style|test|chore)((?:\(([^())\r\n]*)\)|\()?):(.*)?',
   );
 
   final scopes = commits.values
       .where((commit) => commitMessageRegex.hasMatch(commit.message))
       .map((commit) {
     final match = commitMessageRegex.firstMatch(commit.message);
-    return match!.group(1)!;
+    return match!.group(3)!;
   }).toList();
 
   final commitType = Select(
