@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:interactive_cli/interactive_cli.dart';
 import 'package:collection/collection.dart';
 import 'package:tint/tint.dart';
@@ -80,7 +82,10 @@ class Select extends InteractiveLines<SelectOption> {
   @override
   void react(Key pressedKey, finish) {
     if (pressedKey.isControl) {
-      if (pressedKey.controlChar == ControlCharacter.arrowUp) {
+      if (pressedKey.controlChar == ControlCharacter.ctrlC) {
+        context.clearRender();
+        exit(0);
+      } else if (pressedKey.controlChar == ControlCharacter.arrowUp) {
         _up();
       } else if (pressedKey.controlChar == ControlCharacter.arrowDown) {
         _down();

@@ -114,6 +114,7 @@ class Input extends InteractiveLines<String> {
   void react(Key pressedKey, finish) {
     if (pressedKey.isControl) {
       if (pressedKey.controlChar == ControlCharacter.ctrlC) {
+        context.clearRender();
         exit(0);
       } else if (pressedKey.controlChar == ControlCharacter.arrowUp) {
         _up();
