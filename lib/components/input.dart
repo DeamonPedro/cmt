@@ -23,17 +23,17 @@ class Input extends InteractiveLines<String> {
   String get successPrefix => ' ✔ '.green();
 
   List<String> get _enableSuggestions {
-    if (_input.isEmpty) {
-      return suggestions;
+    List<String> list = suggestions;
+    if (_input.isNotEmpty) {
+      list = suggestions
+          .where((suggestion) =>
+              suggestion.startsWith(_input) && suggestion != _input)
+          .toList();
+    }
+    if (list.length > 6) {
+      return list.sublist(0, 6);
     } else {
-      final list = suggestions.where((suggestion) {
-        return suggestion.startsWith(_input) && suggestion != _input;
-      }).toList();
-      if (list.length > 6) {
-        return list.sublist(0, 6);
-      } else {
-        return list;
-      }
+      return list;
     }
   }
 
