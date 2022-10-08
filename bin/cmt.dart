@@ -21,7 +21,7 @@ Future<void> main(List<String> arguments) async {
   if (!isGitRepo) {
     errorMessage('This is not a git directory');
   }
-  final git = await GitDir.fromExisting(path.current);
+  final git = await GitDir.fromExisting(path.current, allowSubdirectory: true);
   final commits = await git.commits();
   final commitMessageRegex = RegExp(
     r'(refactor|feat|fix|docs|style|test|chore)((?:\(([^())\r\n]*)\)|\()?):(.*)?',
