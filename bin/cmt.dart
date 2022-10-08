@@ -30,9 +30,11 @@ Future<void> main(List<String> arguments) async {
   final scopes = commits.values
       .where((commit) => commitMessageRegex.hasMatch(commit.message))
       .map((commit) {
-    final match = commitMessageRegex.firstMatch(commit.message);
-    return match!.group(3)!;
-  }).toList();
+        final match = commitMessageRegex.firstMatch(commit.message);
+        return match!.group(3)!;
+      })
+      .toSet()
+      .toList();
 
   final commitType = Select(
     prompt: 'Commit type',

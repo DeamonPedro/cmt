@@ -26,9 +26,14 @@ class Input extends InteractiveLines<String> {
     if (_input.isEmpty) {
       return suggestions;
     } else {
-      return suggestions.where((suggestion) {
+      final list = suggestions.where((suggestion) {
         return suggestion.startsWith(_input) && suggestion != _input;
       }).toList();
+      if (list.length > 6) {
+        return list.sublist(0, 6);
+      } else {
+        return list;
+      }
     }
   }
 
