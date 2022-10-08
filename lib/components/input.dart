@@ -27,7 +27,8 @@ class Input extends InteractiveLines<String> {
     if (_input.isNotEmpty) {
       list = suggestions
           .where((suggestion) =>
-              suggestion.startsWith(_input) && suggestion != _input)
+              suggestion.toLowerCase().startsWith(_input.toLowerCase()) &&
+              suggestion != _input)
           .toList();
     }
     if (list.length > 6) {
