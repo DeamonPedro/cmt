@@ -30,15 +30,9 @@ class SearchableSelector extends InteractiveLines<SelectOption> {
   }) : _selectedIndex = defaultOption;
 
   @override
-  void onInit() {
-    context.hideCursor();
-  }
-
-  @override
   void onFinish(res) {
-    context.showCursor();
     print(
-        '$successPrefix${prompt.white().bold()}$responsePrefix${options[_selectedIndex].name.brightCyan()}');
+        '$successPrefix${prompt.white().bold()}$responsePrefix${selectedOption.name.brightCyan()}');
   }
 
   @override
@@ -69,12 +63,12 @@ class SearchableSelector extends InteractiveLines<SelectOption> {
     if (_selectedIndex > 0) {
       _selectedIndex--;
     } else {
-      _selectedIndex = options.length - 1;
+      _selectedIndex = enableOptions(_input).length - 1;
     }
   }
 
   void _down() {
-    if (_selectedIndex < options.length - 1) {
+    if (_selectedIndex < enableOptions(_input).length - 1) {
       _selectedIndex++;
     } else {
       _selectedIndex = 0;
@@ -86,11 +80,9 @@ class SearchableSelector extends InteractiveLines<SelectOption> {
         char +
         _input.substring(_cursorIndex, _input.length);
     if (enableOptions(newInput).isNotEmpty) {
-      if (!enableOptions(newInput).contains(selectedOption)) {
-        _selectedIndex = 0;
-      }
       _input = newInput;
       _cursorIndex++;
+      _selectedIndex = 0;
     }
   }
 

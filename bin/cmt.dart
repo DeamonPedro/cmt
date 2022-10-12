@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cmt/components/input.dart';
 import 'package:cmt/components/searchable_selector.dart';
 import 'package:cmt/models/select_option.dart';
@@ -20,18 +22,19 @@ final commitNames = 'refactor|feat|fix|docs|style|test|chore';
 
 Future<void> main(List<String> args) async {
   final parser = ArgParser()
-    ..addFlag('push', abbr: 'p', help: 'Push to remote after commit')
-    ..addFlag('help', abbr: 'h', help: 'Show help')
-    ..addFlag('version', abbr: 'v', help: 'Show version')
-    ..addCommand('f')
-    ..addCommand('r')
-    ..addCommand('c');
+    ..addFlag('help', negatable: false, abbr: 'h', help: 'show help')
+    ..addFlag('version', negatable: false, abbr: 'v', help: 'show version');
   ArgResults argResults = parser.parse(args);
-  final push = argResults['push'] as bool;
   final help = argResults['help'] as bool;
   final version = argResults['version'] as bool;
-  final command = argResults.command?.name;
-  print(command);
+  if (help) {
+    stdout.writeln(parser.usage);
+    return;
+  }
+  if (version) {
+    stdout.writeln('cmt version 0.2.0');
+    return;
+  }
 
   final isGitRepo = await GitDir.isGitDir(path.current);
   if (!isGitRepo) {
@@ -40,17 +43,16 @@ Future<void> main(List<String> args) async {
   final git = await GitDir.fromExisting(path.current, allowSubdirectory: true);
   final commits = await git.commits();
   final commitMessageRegex = RegExp(
-    r'(refactor|feat|fix|docs|style|test|chore)((?:\(([^())\r\n]*)\)|\()?):(.*)?',
+    r'(?<=(?<=refactor|feat|fix|docs|style|test|chore)\().*(?=\):)(?=.*)',
   );
 
-  final scopes = commits.values
-      .where((commit) => commitMessageRegex.hasMatch(commit.message))
-      .map((commit) {
-        final match = commitMessageRegex.firstMatch(commit.message);
-        return match!.group(3)!;
-      })
-      .toSet()
-      .toList();
+  List<String> scopes = [];
+  for (var commit in commits.values) {
+    final match = commitMessageRegex.firstMatch(commit.message);
+    if (match != null) {
+      scopes.add(match.group(0)!);
+    }
+  }
 
   final commitType = SearchableSelector(
     prompt: 'Commit type',
@@ -59,13 +61,21 @@ Future<void> main(List<String> args) async {
 
   final scope = Input(
     prompt: 'Scope',
-    suggestions: scopes,
+    suggestions: scopes.toSet().toList(),
   ).load();
 
   final message = Input(
     prompt: 'Commit message',
   ).load();
 
-  git.runCommand(['add', '.']);
-  git.runCommand(['commit', '-m', '$commitType($scope): $message']);
+  if (message.isEmpty) {
+    errorMessage('Commit message is required');
+  }
+
+  await git.runCommand(['add', '.']);
+  if (scope != '') {
+    await git.runCommand(['commit', '-m', '$commitType($scope): $message']);
+  } else {
+    await git.runCommand(['commit', '-m', '$commitType: $message']);
+  }
 }

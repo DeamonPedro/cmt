@@ -40,6 +40,9 @@ class Input extends InteractiveLines<String> {
 
   @override
   void onFinish(res) {
+    if (res.isEmpty) {
+      res = '(no scope)';
+    }
     print(
         '$successPrefix${prompt.white().bold()}$responsePrefix${res.toString().brightCyan()}');
   }
