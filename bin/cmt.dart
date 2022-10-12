@@ -1,8 +1,10 @@
 import 'package:cmt/components/input.dart';
-import 'package:cmt/components/select.dart';
+import 'package:cmt/components/searchable_selector.dart';
+import 'package:cmt/models/select_option.dart';
 import 'package:cmt/utils.dart';
 import 'package:git/git.dart';
 import 'package:path/path.dart' as path;
+import 'package:args/args.dart';
 
 final commitTypes = [
   SelectOption(name: 'refactor', description: 'refactoring production code'),
@@ -16,7 +18,21 @@ final commitTypes = [
 
 final commitNames = 'refactor|feat|fix|docs|style|test|chore';
 
-Future<void> main(List<String> arguments) async {
+Future<void> main(List<String> args) async {
+  final parser = ArgParser()
+    ..addFlag('push', abbr: 'p', help: 'Push to remote after commit')
+    ..addFlag('help', abbr: 'h', help: 'Show help')
+    ..addFlag('version', abbr: 'v', help: 'Show version')
+    ..addCommand('f')
+    ..addCommand('r')
+    ..addCommand('c');
+  ArgResults argResults = parser.parse(args);
+  final push = argResults['push'] as bool;
+  final help = argResults['help'] as bool;
+  final version = argResults['version'] as bool;
+  final command = argResults.command?.name;
+  print(command);
+
   final isGitRepo = await GitDir.isGitDir(path.current);
   if (!isGitRepo) {
     errorMessage('This is not a git directory');
@@ -36,7 +52,7 @@ Future<void> main(List<String> arguments) async {
       .toSet()
       .toList();
 
-  final commitType = Select(
+  final commitType = SearchableSelector(
     prompt: 'Commit type',
     options: commitTypes,
   ).load().name;

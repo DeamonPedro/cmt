@@ -1,20 +1,9 @@
 import 'dart:io';
 
+import 'package:cmt/models/select_option.dart';
 import 'package:interactive_cli/interactive_cli.dart';
 import 'package:collection/collection.dart';
 import 'package:tint/tint.dart';
-
-class SelectOption {
-  final String name;
-  final String description;
-
-  SelectOption({
-    required this.name,
-    this.description = '',
-  });
-
-  String get fullText => '$name  ($description)';
-}
 
 class Select extends InteractiveLines<SelectOption> {
   final String prompt;
