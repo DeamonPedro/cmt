@@ -18,8 +18,8 @@ class Input extends InteractiveLines<String> {
 
   String get promptPrefix => ' ? '.yellow();
   String get selector => '❯'.green();
-  String get textPrefix => ' › '.gray();
-  String get responsePrefix => ' · '.gray();
+  String get textPrefix => ' › '.cyan();
+  String get responsePrefix => ' · '.cyan();
   String get successPrefix => ' ✔ '.green();
 
   List<String> get _enableSuggestions {
@@ -62,7 +62,7 @@ class Input extends InteractiveLines<String> {
     if (_selectedSuggestions != null) {
       input += _enableSuggestions[_selectedSuggestions ?? 0]
           .substring(_input.length)
-          .gray();
+          .rgb(b: 102, g: 102, r: 102);
     }
 
     lines.add('$question$input');
@@ -70,9 +70,9 @@ class Input extends InteractiveLines<String> {
       lines.addAll(_enableSuggestions.mapIndexed(
         (index, option) {
           if (index == _selectedSuggestions) {
-            return tabulation + option.onGray().white();
+            return tabulation + option.onRgb(b: 102, g: 102, r: 102).blink();
           } else {
-            return tabulation + option.gray();
+            return tabulation + option.rgb(b: 102, g: 102, r: 102);
           }
         },
       ));

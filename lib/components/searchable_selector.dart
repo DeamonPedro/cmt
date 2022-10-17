@@ -19,8 +19,8 @@ class SearchableSelector extends InteractiveLines<SelectOption> {
 
   String get promptPrefix => ' ? '.yellow();
   String get selector => '❯'.green();
-  String get textPrefix => ' › '.gray();
-  String get responsePrefix => ' · '.gray();
+  String get textPrefix => ' › '.rgb(b: 102, g: 102, r: 102);
+  String get responsePrefix => ' · '.rgb(b: 102, g: 102, r: 102);
   String get successPrefix => ' ✔ '.green();
 
   SearchableSelector({
@@ -50,9 +50,10 @@ class SearchableSelector extends InteractiveLines<SelectOption> {
       ...enableOptions(_input).mapIndexed(
         (index, option) {
           if (index == _selectedIndex) {
-            return tabulation + option.fullText.onGray().white();
+            return tabulation +
+                option.fullText.onRgb(b: 102, g: 102, r: 102).blink();
           } else {
-            return tabulation + option.fullText.gray();
+            return tabulation + option.fullText.rgb(b: 102, g: 102, r: 102);
           }
         },
       ),
