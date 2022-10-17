@@ -1,18 +1,18 @@
 # cmt
 
-A command-line tool to create commits in the [Conventional Commits](<https://www.conventionalcommits.org/en/v1.0.0/#summary>) pattern
+A command-line tool to create commits in the [Conventional Commits](<https://www.conventionalcommits.org/en/v1.0.0/#summary>) pattern made in [dart](https://dart.dev/) :dart:.
 
 ## :ok_hand: Example
 
+[![ezgif-com-gif-maker.gif](https://i.postimg.cc/jd1Ss6Dc/ezgif-com-gif-maker.gif)](https://postimg.cc/SJWhdM7Y)
+
+- Terminal-based interactive interface
+- Commit types according to the Conventional Commits specification
+- Suggests scopes from previous commits
+
 ## :rocket: Installation
 
-You can obtain the executable file by downloading a release if you use a Linux system (`x86_64` and `i686`) or by compiling the source code.
-
-### :arrow_down: Download
-
-- [Download](https://github.com/DeamonPedro/jpq/releases/tag/stable) the latest stable version
-- Extract the zip file
-- [Install](#floppy_disk-install)
+The installation script only works on linux :penguin: system so far.
 
 ### :construction_worker: Linux Build
 
@@ -26,16 +26,16 @@ cd cmt
 ./install.sh
 ```
 
-### :gear: Options
+## :gear: Options
 
 - `-h, --help` Print help information
 - `-v, --version` Print version information
 
 ## :twisted_rightwards_arrows: Alternatives
 
-- [jq](https://github.com/stedolan/jq) (made in C for JQ language)
-- [jfq](https://github.com/blgm/jfq) (made in JavaScript to JSONata)
-- [jql](https://github.com/yamafaktory/jql) (made in Rust to A JSON Query Language)
+- [cmt](https://github.com/smallhadroncollider/cmt) (made in Haskell)
+- [cz-cli](https://github.com/commitizen/cz-cli) (made in JavaScript)
+- [cz-emoji](https://github.com/ngryman/cz-emoji) (made in JavaScript)
 
 ## :page_with_curl: License
 
