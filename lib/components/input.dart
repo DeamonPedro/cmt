@@ -70,7 +70,8 @@ class Input extends InteractiveLines<String> {
       lines.addAll(_enableSuggestions.mapIndexed(
         (index, option) {
           if (index == _selectedSuggestions) {
-            return tabulation + option.onRgb(b: 102, g: 102, r: 102).blink();
+            return tabulation +
+                option.onRgb(b: 102, g: 102, r: 102).rgb(r: 60, g: 60, b: 60);
           } else {
             return tabulation + option.rgb(b: 102, g: 102, r: 102);
           }

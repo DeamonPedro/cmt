@@ -37,7 +37,6 @@ class SearchableSelector extends InteractiveLines<SelectOption> {
 
   @override
   List<String> render() {
-    List<String> lines = [];
     final question = '$promptPrefix${prompt.white().bold()}$textPrefix';
     final questionLength = question.strip().length;
     final tabulation = ' ' * questionLength;
@@ -51,7 +50,9 @@ class SearchableSelector extends InteractiveLines<SelectOption> {
         (index, option) {
           if (index == _selectedIndex) {
             return tabulation +
-                option.fullText.onRgb(b: 102, g: 102, r: 102).blink();
+                option.fullText
+                    .onRgb(b: 102, g: 102, r: 102)
+                    .rgb(r: 30, g: 30, b: 30);
           } else {
             return tabulation + option.fullText.rgb(b: 102, g: 102, r: 102);
           }
